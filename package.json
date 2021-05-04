@@ -1,0 +1,23 @@
+{
+  "name": "typescript_sandbox",
+  "version": "1.0.0",
+  "description": "",
+  "main": "typescript.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "lite-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/illimitableissi/TypeScript_Sandbox.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/illimitableissi/TypeScript_Sandbox/issues"
+  },
+  "homepage": "https://github.com/illimitableissi/TypeScript_Sandbox#readme",
+  "devDependencies": {
+    "lite-server": "^2.6.1"
+  }
+}
