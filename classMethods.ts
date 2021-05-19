@@ -1,13 +1,16 @@
 class Department {
-    name: string;
-    employees: string[] = [];
+    //private id: string;
+    //private name: string;
+    //employees is now only accessible inside the class
+    private employees: string[] = [];
 
-    constructor(n: string){
-        this.name = n;
+    //readonly keyword - can only be initialized once and cannot be changed
+    constructor(private readonly id: string, public name: string){
+        // this.name = name;
     }
 
     describe(this: Department) {
-        console.log('Department: ' + this.name)
+        console.log(`Department (${this.id}): ${this.name}`)
     }
 
     addEmployee(employee: string) {
@@ -20,11 +23,33 @@ class Department {
     }
 }
 
-const accounting = new Department("Accounting");
+class ITDepartment extends Department {
+    // admins: string[];
+    constructor(id: string, public admins: string[]) {
+        //whenever you are making a new class that is inheriting another class you must add a super.
+        super(id, 'IT');
+        this.admins = admins;
+    }
+}
+
+class AccountingDepartment extends Department {
+    constructor(id: string, private reports: string[]) {
+        super(id, 'Accounting');
+    }
+
+    addReport(text: string){
+        this.reports.push(text);
+    }
+
+    printReports(){
+        console.log(this.reports)
+    }
+}
+
+const it = new ITDepartment("d1", ['Issi, Max']);
+const accounting = new AccountingDepartment("d1", []);
 
 accounting.addEmployee("issi");
 accounting.addEmployee("Max");
 accounting.printEmployeeInformation();
 
-
-// accounting.describe()
