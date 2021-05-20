@@ -1,4 +1,5 @@
-class Department {
+abstract class Department {
+    static fiscalYear = 2020
     //private id: string;
     //private name: string;
     //employees is now only accessible inside the class using the private methof
@@ -10,9 +11,11 @@ class Department {
         // this.name = name;
     }
 
-    describe(this: Department) {
-        console.log(`Department (${this.id}): ${this.name}`)
+    static createEmployee(name: string){
+        return {name: name}
     }
+    //if class is marked abstract each function must be in the classes that inherit
+    abstract describe(this: Department): void;
 
     addEmployee(employee: string) {
         this.employees.push(employee)
@@ -31,10 +34,15 @@ class ITDepartment extends Department {
         super(id, 'IT');
         this.admins = admins;
     }
+
+    describe(){
+        return;
+    }
 }
 
 class AccountingDepartment extends Department {
     private lastReport: string;
+    private static instance: AccountingDepartment;
 
     get mostRecentReport() {
         if (this.lastReport) {
@@ -43,10 +51,31 @@ class AccountingDepartment extends Department {
         throw new Error('No report found.')
     }
 
-    constructor(id: string, private reports: string[]) {
+    set mostRecentReport(value: string){
+        if(!value){
+            throw new Error('Please add value')
+        }
+        this.addReport(value)  
+      }
+      
+//private makes it so that only one objet can be created from the class 
+   private constructor(id: string, private reports: string[]) {
         super(id, 'Accounting');
         this.lastReport = reports[0];
     }
+
+    static getInstance(){
+        if (this.instance) {
+            return this.instance;
+        }
+        this.instance = new AccountingDepartment('d2', []);
+        return this.instance;
+    }
+
+    describe(){
+        return ''
+    }
+
     addEmployee(name: string){
         if(name === 'Max') {
             return;
@@ -65,10 +94,13 @@ class AccountingDepartment extends Department {
 }
 
 const it = new ITDepartment("d1", ['Issi, Max']);
-const accounting = new AccountingDepartment("d1", []);
+// const accounting = new AccountingDepartment("d1", []);
+const accounting = AccountingDepartment.getInstance();
 console.log(accounting.mostRecentReport)
 
+accounting.mostRecentReport = '';
 accounting.addEmployee("issi");
 accounting.addEmployee("Max");
 accounting.printEmployeeInformation();
 
+const employee1 = Department.createEmployee('Max')
