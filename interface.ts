@@ -2,11 +2,15 @@
 //can only be used to describe structure of object and nothing else
 //can implement interface with a class
 //share functionalities with class
-interface Greetable {
-    name: string;
+interface Greetable extends Named {
+    // readonly name: string;
     // age: number;
 
     greet(phrase: string): void;
+}
+
+interface Named {
+    readonly name: string;
 }
 
 class Person implements Greetable {
