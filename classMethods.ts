@@ -2,7 +2,7 @@ abstract class Department {
     static fiscalYear = 2020
     //private id: string;
     //private name: string;
-    //employees is now only accessible inside the class using the private methof
+    //employees is now only accessible inside the class using the private method
     //protected method allows employees to be changed by other classes that extend this class
     protected employees: string[] = [];
 
