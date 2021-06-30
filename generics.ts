@@ -37,6 +37,62 @@ function countAndDescribe<T extends Lengthy>(element: T): [T, string] {
 
 countAndDescribe(['Sports', 'Cooking'])
 
-function exttrcatANdConvert(obj:object , key:string ) {
-    return obj[key]
+function exttrcatANdConvert<T extends object, U extends keyof T>(obj:T, key:U ) {
+    return 'Value: ' + obj[key]
 }
+
+exttrcatANdConvert({name: 'Max'}, 'name')
+
+//T is the type. So you can make a new object of strings, numbers, etc
+class DataStorage<T extends string | number | boolean> {
+    private data: T[] = [];
+
+    addItem(item: T){
+        this.data.push(item);
+    }
+
+    removeItem(item: T){
+        this.data.splice(this.data.indexOf(item), 1)
+    }
+
+    getItems(){
+        return [...this.data]
+    }
+}
+
+//data storage of strings only
+const textStorage = new DataStorage<string>();
+textStorage.addItem('Issi');
+textStorage.removeItem('');
+textStorage.getItems()
+
+//data storage of numbers only
+const numberStorage = new DataStorage<number>();
+
+//data storage of objects only - wont work
+// const objStorage = new DataStorage<object>();
+
+//***Generic Utilities***
+
+interface CourseGoal {
+    title: string;
+    description: string;
+    completion: Date;
+}
+
+function createCourseGoal (
+    title: string, 
+    description: string, 
+    date: Date
+    ): CourseGoal {
+        //Partial type wraps own type into a type where all properties are optional
+    let courseGoal: Partial<CourseGoal> = {};
+    courseGoal.title = title;
+    courseGoal.description = description;
+    courseGoal.completion = date;
+    return courseGoal as CourseGoal;
+}
+
+//readonly allows you to only view, not allowed to change/add properties
+const names: Readonly<string[]> = ["", ""]
+// names.push('')
